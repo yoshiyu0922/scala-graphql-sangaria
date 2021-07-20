@@ -1,0 +1,1 @@
+Migrate your database using `sbt flywayMigrate` or clean it using `sbt flywayClean`.
