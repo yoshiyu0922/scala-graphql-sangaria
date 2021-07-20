@@ -35,6 +35,8 @@ $ sbt flywayMigrate
 ### 3. アプリを起動
 
 ```shell
+$ cd api
+
 $ sbt run
 ```
 
