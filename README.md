@@ -61,14 +61,24 @@ mutation auth {
 ### create jar
 
 ```sbtshell
-sbt assembly
+$ sbt assembly
 ```
 
 ### create scala-doc
 
 ```sbtshell
-sbt doc
+$ sbt doc
 ``
+
+### deploy
+
+```
+$ sbt dist
+
+$ unzip target/universal/sangaria-graphql-app-1.0-SNAPSHOT.zip
+
+$ ./sangaria-graphql-app-1.0-SNAPSHOT/bin/sangaria-graphql-app 
+```
 
 ### [scalafmt](https://scalameta.org/scalafmt/)
 
