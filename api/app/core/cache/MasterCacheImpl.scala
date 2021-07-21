@@ -2,7 +2,6 @@ package core.cache
 
 import core.codemaster.HowToPay
 import domain.entity.Category
-import core.module.MasterCache
 
 import javax.inject.Inject
 

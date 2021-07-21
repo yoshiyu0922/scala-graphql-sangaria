@@ -1,6 +1,6 @@
 package adapter.controller
 
-import infrastructure.graphql.{AuthMiddleware, ContainerImpl, SchemaDefinition}
+import infrastructure.graphql.{AuthMiddleware, Container, SchemaDefinition}
 import javax.inject.{Inject, Singleton}
 import play.api.http.Writeable
 import play.api.libs.json._
@@ -15,7 +15,7 @@ import scala.util.{Failure, Success}
 @Singleton
 class Application @Inject()(
   cc: ControllerComponents,
-  container: ContainerImpl,
+  container: Container,
   implicit val ec: ExecutionContext
 ) extends AbstractController(cc) {
 

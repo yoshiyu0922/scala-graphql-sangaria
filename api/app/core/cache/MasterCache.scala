@@ -1,6 +1,6 @@
-package core.module
+package core.cache
 
-import domain.entity._
+import domain.entity.{Category, Id}
 
 trait MasterCache {
 

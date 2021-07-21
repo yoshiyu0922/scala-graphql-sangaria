@@ -2,7 +2,6 @@ package core.cache
 
 import com.google.inject._
 import domain.entity._
-import core.module.MasterCache
 import adapter.repository._
 import scalikejdbc.config.DBs
 
