@@ -9,7 +9,6 @@ import scala.concurrent.{ExecutionContext, Future}
 
 object CategoryRepository extends SQLSyntaxSupport[Category] {
   override val tableName = "categories"
-  private val defaultAlias = syntax("pc")
 
   def apply(s: SyntaxProvider[Category])(rs: WrappedResultSet): Category =
     apply(s.resultName)(rs)
@@ -26,10 +25,17 @@ object CategoryRepository extends SQLSyntaxSupport[Category] {
     )
 }
 
+trait CategoryRepository extends SQLSyntaxSupport[Category] {
+  override val tableName = "categories"
+
+  def findAll()(implicit s: DBSession = autoSession): Future[List[Category]]
+}
+
 @Singleton
-class CategoryRepository @Inject()()(implicit val ec: ExecutionContext)
-    extends SQLSyntaxSupport[Category] {
-  private val pc = CategoryRepository.defaultAlias
+class CategoryRepositoryImpl @Inject()()(implicit val ec: ExecutionContext)
+    extends SQLSyntaxSupport[Category]
+    with CategoryRepository {
+  private val pc = syntax("pc")
 
   /**
     * カテゴリを全て取得する
@@ -37,7 +43,7 @@ class CategoryRepository @Inject()()(implicit val ec: ExecutionContext)
     * @param s DBSession
     * @return List[Category]
     */
-  def findAll()(implicit s: DBSession = autoSession): Future[List[Category]] =
+  override def findAll()(implicit s: DBSession = autoSession): Future[List[Category]] =
     Future {
       withSQL {
         select(

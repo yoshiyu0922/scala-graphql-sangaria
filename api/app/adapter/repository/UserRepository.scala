@@ -7,7 +7,6 @@ import scalikejdbc._
 
 object UserRepository extends SQLSyntaxSupport[User] {
   override val tableName = "users"
-  private val defaultAlias = syntax("u")
 
   def apply(s: SyntaxProvider[User])(rs: WrappedResultSet): User =
     apply(s.resultName)(rs)
@@ -23,12 +22,19 @@ object UserRepository extends SQLSyntaxSupport[User] {
       isDeleted = rs.boolean(u.isDeleted),
       deletedAt = rs.zonedDateTimeOpt(u.deletedAt)
     )
-
 }
-@Singleton
-class UserRepository @Inject()() extends SQLSyntaxSupport[User] {
 
-  private val u = UserRepository.defaultAlias
+trait UserRepository extends SQLSyntaxSupport[User] {
+  override val tableName = "users"
+
+  def auth(frontUserId: String, password: String)(implicit s: DBSession = autoSession): Option[User]
+
+  def resolveById(userId: Id[User])(implicit s: DBSession = autoSession): Option[User]
+}
+
+@Singleton
+class UserRepositoryImpl @Inject()() extends UserRepository {
+  private val u = syntax("u")
 
   /**
     * ユーザIDとパスワードに紐づくUserを取得
@@ -38,7 +44,7 @@ class UserRepository @Inject()() extends SQLSyntaxSupport[User] {
     * @param s DBSession
     * @return Option[User]
     */
-  def auth(
+  override def auth(
     frontUserId: String,
     password: String
   )(implicit s: DBSession = autoSession): Option[User] =
@@ -64,7 +70,7 @@ class UserRepository @Inject()() extends SQLSyntaxSupport[User] {
     * @param s DBSession
     * @return Option[User]
     */
-  def resolveById(userId: Id[User])(implicit s: DBSession = autoSession): Option[User] =
+  override def resolveById(userId: Id[User])(implicit s: DBSession = autoSession): Option[User] =
     withSQL {
       select(
         u.result.id,

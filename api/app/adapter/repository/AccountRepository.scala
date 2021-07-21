@@ -39,10 +39,33 @@ object AccountRepository extends SQLSyntaxSupport[Account] {
       .map(_ => AccountRepository(s)(rs))
 }
 
+trait AccountRepository extends SQLSyntaxSupport[Account] {
+  override val tableName = "accounts"
+  def resolve(
+    searchCondition: AccountSearchCondition
+  )(
+    implicit s: DBSession = autoSession
+  ): Future[Account]
+
+  def search(
+    searchCondition: AccountSearchCondition
+  )(
+    implicit s: DBSession = autoSession
+  ): Future[List[Account]]
+
+  def updateBalance(
+    accountId: Id[Account],
+    balance: Int
+  )(
+    implicit s: DBSession = autoSession
+  ): Future[Int]
+}
+
 @Singleton
-class AccountRepository @Inject()()(implicit val ec: ExecutionContext)
-    extends SQLSyntaxSupport[Account] {
-  private val ac = AccountRepository.defaultAlias
+class AccountRepositoryImpl @Inject()()(implicit val ec: ExecutionContext)
+    extends SQLSyntaxSupport[Account]
+    with AccountRepository {
+  private val ac = syntax("ac")
 
   /**
     * 検索条件に該当するAccountを取得
@@ -51,7 +74,7 @@ class AccountRepository @Inject()()(implicit val ec: ExecutionContext)
     * @param s DBSession
     * @return Account
     */
-  def resolve(searchCondition: AccountSearchCondition)(
+  override def resolve(searchCondition: AccountSearchCondition)(
     implicit s: DBSession = autoSession
   ): Future[Account] =
     this.search(searchCondition).flatMap {
@@ -66,7 +89,7 @@ class AccountRepository @Inject()()(implicit val ec: ExecutionContext)
     * @param s DBSession
     * @return List[Account]
     */
-  def search(
+  override def search(
     searchCondition: AccountSearchCondition
   )(implicit s: DBSession = autoSession): Future[List[Account]] =
     Future {

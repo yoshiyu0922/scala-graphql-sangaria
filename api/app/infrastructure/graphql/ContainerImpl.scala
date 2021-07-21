@@ -34,7 +34,7 @@ class ContainerImpl @Inject()()(
 
   override def auth = new UserUsecase(userRepository, bCrypt)
 
-  override def accountRepo = new AccountRepository()
+  override def accountRepo = accountRepository
 
   override def resolveUserByToken(tokenOpt: Option[String]): Future[Option[User]] =
     tokenOpt match {
