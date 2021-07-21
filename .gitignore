@@ -1,6 +1,6 @@
 # intelliJ
 .idea/*
-
+.bsp/*
 
 # Docker project generated files to ignore
 #  if you want to ignore files created by your editor/tools,
@@ -30,10 +30,10 @@ Vagrantfile
 # backend
 target
 logs
-target
 /.idea
 /.idea_modules
 /.classpath
 /.project
 /.settings
 /RUNNING_PID
+
