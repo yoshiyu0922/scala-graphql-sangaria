@@ -224,11 +224,14 @@ trait QueryType extends ArgType {
         description = Some("口座を検索"),
         tags = Authorised :: Nil,
         arguments = UserIdArg :: AccountIdOptArg :: Nil,
-        resolve = ctx => ctx.ctx.accountRepo.search(AccountSearchCondition(
-          userId = Id[User](ctx.arg(UserIdArg)),
-          accountId = ctx.arg(AccountIdOptArg).map(Id[Account])
-        ))
-      ),
+        resolve = ctx =>
+          ctx.ctx.accountRepo.search(
+            AccountSearchCondition(
+              userId = Id[User](ctx.arg(UserIdArg)),
+              accountId = ctx.arg(AccountIdOptArg).map(Id[Account])
+            )
+          )
+      )
     )
   )
 

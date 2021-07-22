@@ -12,5 +12,9 @@ trait ArgType {
   val FrontUserIdArg =
     Argument(name = "userId", argumentType = StringType, description = "front user id")
   val PasswordArg = Argument(name = "password", argumentType = StringType, description = "password")
-  val AccountIdOptArg = Argument(name="account_id", argumentType = OptionInputType(LongType), description = "account id (optional)")
+  val AccountIdOptArg = Argument(
+    name = "account_id",
+    argumentType = OptionInputType(LongType),
+    description = "account id (optional)"
+  )
 }

@@ -34,7 +34,7 @@ trait MutationType extends ArgType {
         description = Some("IDとパスワードで認証"),
         arguments = FrontUserIdArg :: PasswordArg :: Nil,
         resolve = ctx => ctx.ctx.auth.auth(ctx.arg(FrontUserIdArg), ctx.arg(PasswordArg))
-      ),
+      )
     )
   )
 }

@@ -1,7 +1,12 @@
 package infrastructure.graphql
 
 import infrastructure.graphql.schema.Authorised
-import sangria.execution.{BeforeFieldResult, Middleware, MiddlewareBeforeField, MiddlewareQueryContext}
+import sangria.execution.{
+  BeforeFieldResult,
+  Middleware,
+  MiddlewareBeforeField,
+  MiddlewareQueryContext
+}
 import sangria.schema.Context
 
 import scala.concurrent.Await

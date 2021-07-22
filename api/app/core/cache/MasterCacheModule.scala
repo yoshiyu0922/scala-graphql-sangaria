@@ -11,7 +11,7 @@ import scala.concurrent.duration.Duration
 
 @Singleton
 class MasterCacheModule @Inject()(
-  val categoryRepository: CategoryRepository,
+  val categoryRepository: CategoryRepository
 ) extends MasterCache {
   private var categories: List[Category] = Nil
 
