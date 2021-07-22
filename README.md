@@ -68,7 +68,7 @@ $ sbt assembly
 
 ```sbtshell
 $ sbt doc
-``
+```
 
 ### deploy
 
